@@ -1,0 +1,45 @@
+
+; Run parameters
+integrator              = md        ; leap-frog integrator
+nsteps                  = 500000000    ; 2 * 500000000 = 1000 ns 
+dt                      = 0.002     ; 2 fs
+; Output control
+nstenergy               = 25000      ; save energies every 50.0 ps
+nstlog                  = 25000      ; update log file every 50.0 ps
+nstxout-compressed      = 25000      ; save coordinates every 50.0 ps
+
+energygrps      =  SOL NA CL protein_1 protein_2 protein_3 protein_4 protein_5 protein_6 protein_7 protein_8 protein_9 protein_10 protein_11 protein_12 protein_13 protein_14 protein_15 protein_16 protein_17 protein_18 protein_19 protein_20 protein_21 protein_22 protein_23 protein_24 protein_25 protein_26 protein_27 protein_28 protein_29 protein_30 protein_31 protein_32 protein_33 protein_34 protein_35 protein_36 protein_37 protein_38 protein_39 protein_40 protein_41 protein_42 protein_43 protein_44 protein_45 protein_46 protein_47 protein_48
+
+; Bond parameters
+continuation            = yes       ; Restarting after NPT 
+constraint_algorithm    = lincs     ; holonomic constraints 
+constraints             = h-bonds   ; bonds involving H are constrained
+lincs_iter              = 1         ; accuracy of LINCS
+lincs_order             = 4         ; also related to accuracy
+; Neighborsearching
+cutoff-scheme           = Verlet    ; Buffered neighbor searching
+coulombtype             = Cut-off     
+vdw-type                 = Cut-off
+ns_type                 = grid      ; search neighboring grid cells
+nstlist                 = 1        
+rcoulomb                = 3.5       
+rvdw                    = 3.5       
+
+
+verlet-buffer-tolerance  = 0.005
+; Temperature coupling is on
+tcoupl                  = V-rescale             ; modified Berendsen thermostat
+tc-grps                 = Protein Non-Protein   ; two coupling groups - more accurate
+tau_t                   = 1.0     1.0           ; time constant, in ps
+ref_t                   = 300     300           ; reference temperature, one for each group, in K
+; Pressure coupling is on
+pcoupl                  = no     ; Pressure coupling on in NPT     ;
+; Periodic boundary conditions
+pbc                     = xyz       ; 3-D PBC
+; Dispersion correction
+DispCorr                = EnerPres  ; account for cut-off vdW scheme
+; Velocity generation
+gen_vel                 = no        ; Velocity generation is off 
+comm-mode                = Linear
+nstcomm                  = 100
+nsttcouple            = 100
